@@ -1,6 +1,8 @@
 package com.experiment.generativeaiexperiment.model;
 
-public record CountryFilterCriteria(String name, Integer population, String sort) {
+import com.experiment.generativeaiexperiment.model.sort.SortDirection;
+
+public record CountryFilterCriteria(String name, Integer population, SortDirection direction) {
 
     public boolean filterByName() {
         return this.name != null && !this.name.isBlank();
@@ -11,6 +13,6 @@ public record CountryFilterCriteria(String name, Integer population, String sort
     }
 
     public boolean sortByName() {
-        return false;
+        return direction != null;
     }
 }

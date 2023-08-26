@@ -1,6 +1,7 @@
 package com.experiment.generativeaiexperiment.controller;
 
 import com.experiment.generativeaiexperiment.model.CountryFilterCriteria;
+import com.experiment.generativeaiexperiment.model.sort.SortDirection;
 import com.experiment.generativeaiexperiment.service.CountryService;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.util.List;
@@ -26,7 +27,7 @@ public class CountryController {
     public ResponseEntity<List<JsonNode>> getAllCountries(@RequestParam(name = "name", required = false) final String name,
                                                           @RequestParam(name = "population", required = false) final Integer population,
                                                           @RequestParam(name = "sort", required = false) final String sort) {
-        final CountryFilterCriteria filterCriteria = new CountryFilterCriteria(name, population, sort);
+        final CountryFilterCriteria filterCriteria = new CountryFilterCriteria(name, population, SortDirection.getDirection(sort));
         final List<JsonNode> countryList = countryService.getAllCountries(filterCriteria);
 
         return ResponseEntity.ok(countryList);

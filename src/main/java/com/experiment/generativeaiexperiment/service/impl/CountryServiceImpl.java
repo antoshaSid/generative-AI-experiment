@@ -2,6 +2,8 @@ package com.experiment.generativeaiexperiment.service.impl;
 
 import com.experiment.generativeaiexperiment.client.CountryHttpClient;
 import com.experiment.generativeaiexperiment.model.CountryFilterCriteria;
+import com.experiment.generativeaiexperiment.model.sort.CountryComparator;
+import com.experiment.generativeaiexperiment.model.sort.SortDirection;
 import com.experiment.generativeaiexperiment.service.CountryService;
 import com.experiment.generativeaiexperiment.utils.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -43,9 +45,9 @@ public class CountryServiceImpl implements CountryService {
                 nodeList = this.filterByPopulation(filterCriteria.population(), nodeList);
             }
 
-//            if (sort) {
-//
-//            }
+            if (filterCriteria.sortByName()) {
+                nodeList = this.sortByName(filterCriteria.direction(), nodeList);
+            }
         }
 
         return nodeList;
@@ -65,6 +67,12 @@ public class CountryServiceImpl implements CountryService {
         return countryList.stream()
             .filter(countryNode -> countryNode.get("population")
                 .longValue() < population * 1000000L)
+            .collect(Collectors.toList());
+    }
+
+    private List<JsonNode> sortByName(final SortDirection direction, final List<JsonNode> countryList) {
+        return countryList.stream()
+            .sorted(new CountryComparator(direction))
             .collect(Collectors.toList());
     }
 }
