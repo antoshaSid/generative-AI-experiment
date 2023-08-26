@@ -10,7 +10,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -64,25 +63,25 @@ public class CountryServiceImpl implements CountryService {
                 .textValue()
                 .toLowerCase()
                 .contains(name.toLowerCase()))
-            .collect(Collectors.toList());
+            .toList();
     }
 
     private List<JsonNode> filterByPopulation(final Integer population, final List<JsonNode> countryList) {
         return countryList.stream()
             .filter(countryNode -> countryNode.get("population")
                 .longValue() < population * 1000000L)
-            .collect(Collectors.toList());
+            .toList();
     }
 
     private List<JsonNode> sortByName(final SortDirection direction, final List<JsonNode> countryList) {
         return countryList.stream()
             .sorted(new CountryComparator(direction))
-            .collect(Collectors.toList());
+            .toList();
     }
 
     private List<JsonNode> limit(final Integer limit, final List<JsonNode> countryList) {
         return countryList.stream()
             .limit(limit)
-            .collect(Collectors.toList());
+            .toList();
     }
 }
