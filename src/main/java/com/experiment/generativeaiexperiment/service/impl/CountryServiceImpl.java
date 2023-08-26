@@ -48,6 +48,10 @@ public class CountryServiceImpl implements CountryService {
             if (filterCriteria.sortByName()) {
                 nodeList = this.sortByName(filterCriteria.direction(), nodeList);
             }
+
+            if (filterCriteria.haveLimit()) {
+                nodeList = this.limit(filterCriteria.limit(), nodeList);
+            }
         }
 
         return nodeList;
@@ -73,6 +77,12 @@ public class CountryServiceImpl implements CountryService {
     private List<JsonNode> sortByName(final SortDirection direction, final List<JsonNode> countryList) {
         return countryList.stream()
             .sorted(new CountryComparator(direction))
+            .collect(Collectors.toList());
+    }
+
+    private List<JsonNode> limit(final Integer limit, final List<JsonNode> countryList) {
+        return countryList.stream()
+            .limit(limit)
             .collect(Collectors.toList());
     }
 }
