@@ -8,6 +8,9 @@ public final class JsonParser {
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
+    private JsonParser() {
+    }
+
     public static String toJson(final Object value) throws JsonProcessingException {
         return MAPPER.writeValueAsString(value);
     }
