@@ -39,9 +39,9 @@ public class CountryServiceImpl implements CountryService {
                 nodeList = this.filterByName(filterCriteria.name(), nodeList);
             }
 
-//            if (filterCriteria.filterByPopulation()) {
-//
-//            }
+            if (filterCriteria.filterByPopulation()) {
+                nodeList = this.filterByPopulation(filterCriteria.population(), nodeList);
+            }
 
 //            if (sort) {
 //
@@ -58,6 +58,13 @@ public class CountryServiceImpl implements CountryService {
                 .textValue()
                 .toLowerCase()
                 .contains(name.toLowerCase()))
+            .collect(Collectors.toList());
+    }
+
+    private List<JsonNode> filterByPopulation(final Integer population, final List<JsonNode> countryList) {
+        return countryList.stream()
+            .filter(countryNode -> countryNode.get("population")
+                .longValue() < population * 1000000L)
             .collect(Collectors.toList());
     }
 }
