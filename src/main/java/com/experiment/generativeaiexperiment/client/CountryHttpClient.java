@@ -5,7 +5,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-public class CountryHttpClient {
+public final class CountryHttpClient {
 
     public static final String COUNTRY_URL = "https://restcountries.com/v3.1";
 
